@@ -1,0 +1,271 @@
+---
+title: "Goodreads 2022"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+# MY 2022 IN BOOKS USING R: A (very) beginners guide to doing cool things on R
+
+I'm learning R and I love reading. So, when I came across [this article](https://bgstieber.github.io/post/my-year-in-books-goodreads-data-analysis-in-r/), I knew I wanted to do the same as Brad: I wanted to analyse my year in books using Goodreads data on R. Since I'm foreseeing this may be a bit of a roller-coaster for me, I'm starting to write this article that will serve as a logbook of this (hopefully successful) adventure.
+
+Let's start!
+
+First of all, Brad uses the tidyverse, lubridate, and scales packages. I think I already have scales, since I've been using ggplot2, so let's just open them.
+
+```{r}
+# This is easy. I can do that (As you will see, I’m my own hypeman)
+library(tidyverse)
+
+library(lubridate)
+
+library(scales)
+```
+
+Now, I need to get my Goodreads data. In order to export your library, you just have to go to "My books" and on the bottom of the left column there's the "Import and export" tool, which leads you [here](https://www.goodreads.com/review/import). This gives us a beautiful csv document with all the books we've logged in Goodreads.
+
+In order to check if the data is fine and to select only the information I need, I know I could use R. However, that is way beyond the scope of my basic knowledge of the program. Therefore, I will use Access. In Access I checked if there was anything wrong with the data and I selected only the Date Read, My Rating, Average Rating, Number of Pages, and Original Publication Year columns, like Brad did. Moreover, I gave rating to some books that I hadn't want to rate throughout the year and I selected only those books I read in 2022. With that, I created a csv document.
+
+My data is complete and ready to go! Now, let's work with R 👻🧛🎃.
+
+### *The beginning*
+
+Firts, let's open the csv document.
+
+```{r}
+library(readr)
+
+X2022 <- read_delim("2022.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE) 
+
+View(X2022)
+```
+
+Awesome! Now let's do what Brad did.
+
+These are some of the basic elements he changed before getting stared. I am adapting his code to my needs. Now, I will create a new variable that includes the rating difference between my rating and Goodreads' average.
+
+```{r}
+
+library(dplyr)
+
+books_2022 <- mutate(X2022, rating_diff = My_Rating - Average_Rating)
+```
+
+He also did more preliminary arrangements that I don't completely understand, but I'm going to try to.
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, error=FALSE}
+library(tidyverse)
+library(lubridate)
+library(scales)
+theme_set(theme_bw())
+c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
+  a <- as.trans(a)
+  b <- as.trans(b)
+  name <- paste(a$name, b$name, sep = "-")
+  trans <- function(x) a$trans(b$trans(x))
+  inv <- function(x) b$inverse(a$inverse(x))
+  trans_new(name = name, transform = trans, 
+            inverse = inv, 
+            breaks = breaks, format = format)
+}
+rev_date <- c_trans("reverse", "time")
+```
+
+Apparently, "theme_set(theme_bw())" is used for overriding the default theme elements by calling element functions, so every graph uses a white background and thin grey grid lines. The "as.trans" function converts character string to transformer, which means that now we have a data set to work with. Then the rest of the code is part of the *trans*formation of the data, including the last part (rev_date), which is a way to read time from earlier to later. Cool!
+
+### *Rating comparison*
+
+Now, let's get to work. First, let's do the graph I'm more excited about: let's look at the differences between the rating I gave to the books and the rating average on Goodreads. Apparently, I'm kind of a hater (Or maybe I just have good criteria and TASTE).
+
+```{r fig.height=10, fig.width=8.5}
+
+library(ggplot2)
+
+library(dplyr)
+
+books_2022 %>%
+    mutate(title_abbrev = 
+               ifelse(nchar(Title) > 60,
+                      paste0(substr(Title, 1, 60), "..."),
+                      Title)) %>%
+    ggplot(aes(reorder(title_abbrev, rating_diff),
+               rating_diff,
+               fill = factor(My_Rating)))+
+    geom_col(colour = "black")+
+    coord_flip()+
+    scale_fill_viridis_d("My Rating", option = "cividis")+
+    xlab("")+
+    ylab("My Rating - Goodreads Avg")+
+    theme(legend.position = "top",
+          axis.text.y = element_text(size = 8))+
+    ggtitle("My Rating Versus the Goodreads Average")
+```
+
+### *Publication dates*
+
+Now let's look at temporal stuff. Apparently, 48% of the books I read last year were published after 2010. I should probably get out of the booktok bubble and read older stuff as well. (The only book that does not appear on the graph is Seneca's *On The Shortness of Life*, given it was published in the year 49 d.C. and that kind of messed up the visualization of the graph)
+
+```{r}
+books_2022 %>%
+  ggplot(aes(Original_Publication_Year))+
+  geom_bar()+
+  xlab("Year Published")+
+  coord_cartesian(xlim=c(1890, 2023)) +
+  ylab("Books")+
+  ggtitle("When were my 2020 reads published?",
+          subtitle = paste0(percent(mean(books_2022$Original_Publication_Year >= 2010)),
+                            " of books I read in 2022 were published ",
+                            "in 2010 or later."))
+```
+
+### *Timeline*
+
+This next code should give us the timeline, that is, a visualization of the books I read in 2022, from first read until last read.
+
+```{r echo = FALSE, fig.width=5.5, fig.height=8.5, fig.align="center"}
+
+library(ggplot2)
+
+library(dplyr)
+
+books_2022 %>%
+    mutate(title_abbrev = 
+             ifelse(nchar(Title) > 75,
+                    paste0(substr(Title, 1, 75), "..."),
+                    Title)) %>%
+    ggplot(aes(as.POSIXct(Date_Read), 1, label = Title))+
+    geom_text(size = 2)+
+    scale_x_continuous(aes(as.POSIXct("Date Finished", trans = rev_date)))+
+    coord_flip()+
+    theme_minimal()+
+    theme(axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.x = element_blank(),
+          panel.grid.major.x = element_blank(),
+          panel.grid.minor.x = element_blank())+
+    ggtitle("My Year in Books: 2022 Timeline")
+```
+
+My timeline looks horrible because there are more books than there is space (like in my bookshelf). It's time to explore a solution outside of Brad's code. As always, the first step is looking at online forums and hope for the best.
+
+I have found the following: I could install the package ggrepel and use geom_text_repel instead of geom_text. This avoids any overlap of the labels, which is all I need! However, I still have too many books and I have to add ggrepel.max.overlaps = Inf so there's no limit to the overlapping of my labels. It ends up looking like this:
+
+```{r echo = FALSE, fig.width=5.5, fig.height=20, fig.align="center"}
+
+library(ggplot2)
+
+library(dplyr)
+  
+library(ggrepel)
+  
+options(ggrepel.max.overlaps = Inf)
+
+books_2022 %>%
+    mutate(title_abbrev = 
+             ifelse(nchar(Title) > 75,
+                    paste0(substr(Title, 1, 75), "..."),
+                    Title)) %>%
+    ggplot(aes(as.POSIXct(Date_Read), 1, label = Title))+
+    geom_text_repel(size = 2)+
+    scale_x_continuous(aes(as.POSIXct("Date Finished", trans = rev_date)))+
+    coord_flip()+
+    theme_minimal()+
+    theme(axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.x = element_blank(),
+          panel.grid.major.x = element_blank(),
+          panel.grid.minor.x = element_blank())+
+    ggtitle("My Year in Books: 2022 Timeline")
+```
+
+This is still not ideal. Which is making me realize that I can't just use his code without taking into account that my data is different. He had 30 books. I am, on the other hand, working with 104 books. Therefore, I have to come up with my own ideas of what I can do with my data (I was not expecting this post to be so motivational).
+
+### *I gotta go my own way*
+
+What do *I* actually wanna know from the data? Well, I would like to know what can I expect from 2023 given what I read in 2022. I would like to know the percentages of books I've read on different languages (English, Spanish and Italian). Lastly, I want to know if I read more books written by women or men (sorry for this binary perspective of my data).
+
+#### *2023 expectations*
+
+I probably read so much in 2022 because until June I had a part time job, then I had summer holidays until September, the month in which I started my full-time academic job. Since I will continue having this job during 2023, we can expect the pace of my reading this year to look like the pace from September onwards.
+
+I could look at how many daily pages I read since September. I'm going to keep it very simple. First, I will look at how many pages I read since the 1st September. Then, I will divide that result between 122 (days in September-December).
+
+```{r}
+
+X2022_filtrado <- books_2022[which(books_2022$Date_Read > "2022-09-01"),]
+
+view(X2022_filtrado)
+
+sum(X2022_filtrado[, 'Number_of_Pages'])
+```
+
+So I've read 5580 pages from September till December. Let's see how many daily pages that is.
+
+```{r}
+SeptDec <- (sum(X2022_filtrado[, 'Number_of_Pages'])) / 122
+```
+
+```{r}
+
+NextYearPredictions <- SeptDec * 365
+
+Mean <- mean(X2022$Number_of_Pages, na.rm=TRUE)
+
+NextYearPredictions1 <- NextYearPredictions / 245.35
+```
+
+I read 45.74 daily pages since I'm a full-time worker, not bad! If I keep up that pace and taking into account that I usually read books that are around 245 pages long, I will read 68 books next year. Can't wait to see if this prediction comes true!
+
+#### *Languages*
+
+I've found a package online that identifies the language of the text, called "textcat". However, it didn't work that well (I can assure you I haven't read anything in Esperanto this year). Moreover, I realised Goodreads data is not appropriate for this enterprise since the language of the titles is random, it is not the language in which the books I read were. It seems that, this second question will remain unresolved by artificial intelligence.
+
+```{r}
+library(textcat)
+
+language <- textcat(c(books_2022$Title))
+
+view(language)
+```
+
+#### *Let's talk gender*
+
+Okay, so I have the list of authors of the books I've read. It's finally my time to try [Gender API](https://gender-api.com/en/) for the first time. I am very aware of the dangers of using names to assign gender and how this binary approach can be harmful, so I will be very careful with the results I get.
+
+Gender API is asking me for a csv file with the names. So, first of all, I have to create such document.
+
+```{r}
+write.csv(X2022$Author, "C:\\Users\\Usuario\\Documents\\2022goodreadsnames.csv", row.names=FALSE)
+```
+
+Since the free version of Gender.API can only process a maximum of 100 names and I've read 104 books, I've eliminated the duplicates and I'm good to go (although there are five female names that the algorithm has interpreted as male, one male that has been read as female and the unknown one corresponds to Rosa Chacel).
+
+```{r}
+library(readxl)
+
+X2022goodreadsnames <- read_excel("2022goodreadsnames.xlsx")
+
+View(X2022goodreadsnames)
+```
+
+```{r}
+gender <- as.data.frame(X2022goodreadsnames$ga_gender)
+
+gender1 <- gender %>% 
+  count(`X2022goodreadsnames$ga_gender`)
+```
+
+Let's do a graph with this information, shall we?
+
+```{r}
+
+count <- c(54, 44)
+colors <- c("#A2E1DB", "#FFC8A2")
+labels <- c("Female", "Male")
+
+pie(count, labels, main="Gender", col=colors)
+```
+
+So there's that! As a beginner, I'm pretty happy with what I have done here. I still have much to learn and I'm excited to see what I will be able to do with my 2023 Goodreads data next year. See you then!
