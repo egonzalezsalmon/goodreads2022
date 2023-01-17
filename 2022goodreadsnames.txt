@@ -1,0 +1,99 @@
+﻿"Alfonso Zapico";ga_first_name;ga_last_name;ga_gender;ga_accuracy;ga_samples
+"Andrea Bajani";Andrea;Bajani;female;54;161059
+"Kathrin Zippel";Kathrin;Zippel;female;98;3596
+"Theodor Kallifatides";Theodor;Kallifatides;male;99;510
+"Vivian Gornick";Vivian;Gornick;female;93;12465
+"Claudia Piñeiro";Claudia;Piñeiro;female;98;72003
+"Linda Babcock";Linda;Babcock;female;97;68888
+"Carol Gilligan";Carol;Gilligan;female;97;29790
+"Nicola De Bellis";Nicola;"de Bellis";male;81;36692
+"Nerea Rojas";Nerea;Rojas;female;98;5034
+"Jenn Shapland";Jenn;Shapland;female;98;4574
+"Cristian Acevedo";Cristian;Acevedo;male;99;46450
+"Jeanette Winterson";Jeanette;Winterson;female;97;6057
+"Abraham Flexner";Abraham;Flexner;male;99;10411
+"Vivian Gornick";Vivian;Gornick;female;93;12465
+"Andrea Abreu López";"Andrea Abreu";López;female;54;161207
+"Kenji Miyazawa";Kenji;Miyazawa;male;98;1939
+"Mona Awad";Mona;Awad;female;96;14965
+"Mario Benedetti";Mario;Benedetti;male;99;112267
+"Coco Mellors";Coco;Mellors;female;60;11278
+"Elisa Victoria";Victoria;Elisa;female;98;33384
+"Frantz Fanon";Frantz;Fanon;male;97;923
+"Virginia Woolf";Virginia;Woolf;female;98;14661
+Seneca;Seneca;;male;61;135
+"Kazuo Ishiguro";Kazuo;Ishiguro;male;99;362
+"James Baldwin";James;Baldwin;male;99;131879
+"Jennette McCurdy";Jennette;Mccurdy;female;95;116
+"Jacqueline Harpman";Jacqueline;Harpman;female;98;23327
+"Mariana Enríquez";Mariana;Enríquez;female;98;27420
+"Mircea Cartarescu";Mircea;Cartarescu;male;98;2257
+"Susan Sontag";Susan;Sontag;female;98;34211
+"James Baldwin";James;Baldwin;male;99;131879
+"Milan Kundera";Milan;Kundera;male;98;31710
+"Johanna Hedman";Johanna;Hedman;female;98;15895
+"William Faulkner";William;Faulkner;male;99;67797
+"Toshikazu Kawaguchi";Toshikazu;Kawaguchi;male;100;73
+"Bryan Lee O'Malley";"Bryan Lee";O'malley;male;100;13
+"Oscar Wilde";Oscar;Wilde;male;99;48539
+"Rachel Cusk";Rachel;Cusk;female;98;41104
+"Noam Chomsky";Noam;Chomsky;male;70;924
+"Andrés Barba";Andrés;Barba;male;99;6036
+"Olga Viñuales";Olga;Viñuales;female;98;42388
+"Alison Bechdel";Alison;Bechdel;female;93;14178
+"Albert Camus";Albert;Camus;male;98;31368
+"Juanjo Sáez";Juanjo;Sáez;male;99;7137
+"Jim Crace";Jim;Crace;male;99;40318
+"Tia Williams";Tia;Williams;female;89;3776
+"Angela  Chen";Angela;Chen;female;98;69937
+"Casey McQuiston";Casey;Mcquiston;male;58;8670
+"Ian McEwan";Ian;Mcewan;male;99;34076
+"Lucía Lijtmaer";Lucía;Lijtmaer;female;99;2870
+"Ilene Beckerman";Ilene;Beckerman;female;98;268
+"Wassily Kandinsky";Wassily;Kandinsky;male;89;9
+"Bethan Roberts";Bethan;Roberts;female;97;389
+"Esther D. Rothblum";Esther;D.;female;98;27258
+"Casey McQuiston";Casey;Mcquiston;male;58;8670
+"Monique Wittig";Monique;Wittig;female;98;25228
+"Rosa Chacel";Chacel;Rosa;unknown;50;4
+"Ángeles  Vicente";Ángeles;Vicente;female;98;334
+"J. Jack Halberstam";Jack;J.;male;97;59917
+"Alice Oseman";Alice;Oseman;female;98;40209
+"Alice Oseman";Alice;Oseman;female;98;40209
+"Mónica Cano Abadía";"Mónica Cano";Abadía;female;88;6539
+"NOT A BOOK";Not;Book;male;74;575
+"Christos Tsiolkas";Christos;Tsiolkas;male;99;3820
+"Nella Larsen";Nella;Larsen;female;97;1380
+"Rachel Cusk";Rachel;Cusk;female;98;41104
+"Alice Oseman";Alice;Oseman;female;98;40209
+"Sarah Waters";Sarah;Waters;female;98;127408
+"James Joyce";James;Joyce;male;99;131879
+"Benoîte Groult";Benoîte;Groult;female;100;15
+"Andrés Barba";Andrés;Barba;male;99;6036
+"Peter van Gestel";Peter;"van Gestel";male;99;146529
+"Ursula K. Le Guin";Ursula;"Le Guin";female;98;5883
+"Mario Benedetti";Mario;Benedetti;male;99;112267
+"Mario Benedetti";Mario;Benedetti;male;99;112267
+"Mark Fisher";Mark;Fisher;male;100;48064
+"Mario Benedetti";Mario;Benedetti;male;99;112267
+"Lucía Lijtmaer";Lucía;Lijtmaer;female;99;2870
+"Carson McCullers";Carson;Mccullers;male;97;6541
+"Dolly Alderton";Dolly;Alderton;female;91;2786
+"Elena Fortún";Elena;Fortún;female;98;74807
+"Carson McCullers";Carson;Mccullers;male;97;6541
+"Virginia Woolf";Virginia;Woolf;female;98;14661
+"Brigitte Vasallo";Brigitte;Vasallo;female;98;22572
+"Ángeles Caso";Ángeles;Caso;female;98;334
+"Dolly Alderton";Dolly;Alderton;female;91;2786
+"Miguel de Unamuno";Miguel;"de Unamuno";male;99;89766
+"Adam Silvera";Adam;Silvera;male;99;101750
+"Huma Qureshi";Huma;Qureshi;female;92;720
+"Edurne Portela";Edurne;Portela;female;98;749
+"Víctor Mora Gaspar";"Víctor Mora";Gaspar;male;84;4396
+"Megan Nolan";Megan;Nolan;female;99;21742
+"Benjamin Alire Sáenz";"Benjamin Alire";Sáenz;male;99;50729
+"Joan Didion";Joan;Didion;male;59;19446
+"Mae Martin";Mae;Martin;female;92;1977
+"Hermann Hesse";Hermann;Hesse;male;97;4973
+"Taylor Jenkins Reid";"Taylor Jenkins";Reid;female;66;14490
+"Adrienne Rich";Adrienne;Rich;female;99;3249
