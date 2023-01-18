@@ -240,11 +240,7 @@ view(language)
 
 Okay, so I have the list of authors of the books I've read. It's finally my time to try [Gender API](https://gender-api.com/en/) for the first time. I am very aware of the dangers of using names to assign gender and how this binary approach can be harmful, so I will be very careful with the results I get.
 
-Gender API is asking me for a csv file with the names. So, first of all, I have to create such document.
-
-```{r}
-write.csv(X2022$Author, "C:\\Users\\Usuario\\Documents\\2022goodreadsnames.csv", row.names=FALSE)
-```
+Gender API is asking me for a csv file with the names. So, first of all, I have to create such document. I will use write.csv and the Author column of X2022 for that. To do that, I have to create an empty csv document in my computer and then use the route of the document in the write.csv function.
 
 Since the free version of Gender.API can only process a maximum of 100 names and I've read 104 books, I've eliminated the duplicates and I'm good to go (although there are five female names that the algorithm has interpreted as male, one male that has been read as female and the unknown one corresponds to Rosa Chacel).
 
